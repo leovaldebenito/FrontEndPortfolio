@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
 
   title:string = 'Portfolio Leonardo Valdebenito';
-
+  toggleAddTask(){
+    console.log("toggleAddTask!");
+  }
 }
