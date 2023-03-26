@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {Task} from '../../Task'
 import { TaskService } from '../../service/task.service';
 
@@ -11,11 +11,27 @@ import { TaskService } from '../../service/task.service';
 export class TasksComponent implements OnInit {
 
   tasks: Task[] = [];
-
+constructor(
+  private taskService: TaskService
+){}
 
   ngOnInit(): void {
     this.taskService.getTasks().subscribe((tasks) => (
       this.tasks = tasks
     ));
   }
+
+  deleteTask(task: Task) {
+    this.taskService.deleteTask(task)
+    .subscribe(() =>(
+      this.tasks =this.tasks.filter((t) =>{
+        return t.id !== task.id })
+    ))
+  }
+
+toggleReminder(task:Task){
+  task.reminder = !task.reminder
+  this.taskService.updateTaskReminder(task).subscribe();
+}
+
 }
